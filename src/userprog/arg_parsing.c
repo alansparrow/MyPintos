@@ -1,0 +1,38 @@
+#include "userprog/arg_parsing.h"
+
+int get_argc(char *cmd)
+{
+  int arg_count = 0;
+  char *token1, *save_ptr1;
+  char *cmd_cpy1 = (char *) malloc(sizeof(char) * strlen(cmd));
+  strcpy(cmd_cpy1, cmd);
+
+  for (token1 = strtok_r(cmd_cpy1, " ", &save_ptr1);
+       token1 != NULL;
+       token1 = strtok_r(NULL, " ", &save_ptr1)) {
+    arg_count++;
+  }
+
+  //free(cmd_cpy1);
+
+  return arg_count;
+}
+
+void parse_cmd(char *cmd, int argc, char **argv)
+{
+  int arg_count = 0;
+  char *token1 = NULL, *save_ptr1 = NULL;
+  char *cmd_cpy1 = (char *) malloc(sizeof(char) * strlen(cmd));
+
+  strcpy(cmd_cpy1, cmd);
+
+  for (token1 = strtok_r(cmd_cpy1, " ", &save_ptr1);
+       token1 != NULL;
+       token1 = strtok_r(NULL, " ", &save_ptr1)) {
+    argv[arg_count]= (char *) malloc(sizeof(char) * strlen(token1));
+    strcpy(argv[arg_count], token1);
+    arg_count++;
+  }
+
+  //free(cmd_cpy1);
+}
